@@ -16,7 +16,6 @@ const {movie, showFullVideo} = storeToRefs (useMovie)
 
 </script>
 <template>
-  <div class="text-red-900">
-    TEXT HERE
-  </div>
+  <div class="fixed w-full h-screen bg-black" ></div>
+  <div class="flex z-40 items-center w-[120px] h-screen bg-black relative"></div>
 </template>
