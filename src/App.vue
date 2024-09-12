@@ -1,32 +1,29 @@
-<script>
-import { onMounted } from "vue";
-import { storeToRefs } from 'pinia';
+<script setup>
+import { onMounted, ref } from 'vue';
+import movies from './stores/movies.json';
+
 
 import { useMovieStore } from './stores/movie';
-export default {
-  setup() {
-    // Acceder a la tienda dentro de setup
-    const useMovie = useMovieStore();
+import { storeToRefs } from 'pinia';
 
-    // Extraer las propiedades reactivas de la tienda usando storeToRefs
-    const { movie, showFullVideo } = storeToRefs(useMovie);
+// Uso de la tienda de Pinia
+const useMovie = useMovieStore();
+const { movie, showFullVideo } = storeToRefs(useMovie);
 
-    // Puedes usar onMounted si necesitas hacer algo cuando el componente esté montado
-    onMounted(() => {
-      console.log("Componente montado");
-    });
+// Referencia para el video (esto es útil si más adelante quieres manipular el video)
+let video = ref(null);
 
-    return {
-      movie,
-      showFullVideo
-    };
-  }
-};
+// Ejecutar lógica cuando el componente esté montado
+onMounted(() => {
+  // Establecer el primer elemento de movies en la variable movie con un retardo de 100ms
+  setTimeout(() => movie.value = movies[0][0], 100);
+});
 </script>
+
 <template>
   <div class="fixed w-full h-screen bg-black">
     <div v-if="!showFullVideo" id="SideNav" class="flex z-40 items-center w-[120px] h-screen bg-black relative">
-      IMAGE
+      <img class="absolute top-0 w-[35px] mt-10 ml-10" src="/public/images/netflix-logo.png">
       <div>
         <!-- Icono de búsqueda (Magnify) -->
         <div class="py-2 mx-10 my-6">
@@ -68,6 +65,18 @@ export default {
 
 
       </div>
+      <div v-if="!showFullVideo">
+  <div class="fixed flex z-20 top-0 right-0 w-full h-[50%] bg-black pl-[120px] bg-clip-border">
+    <video
+      v-if="movie"
+      :src="'/videos/' + movie.name + '.mp4'"
+      autoplay
+      loop
+      class="absolute z-0 h-[600px] right-0 top-0"
+    />
+  </div>
+</div>
+
     </div>
   </div>
 </template>
