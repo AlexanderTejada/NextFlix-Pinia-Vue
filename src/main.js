@@ -1,6 +1,17 @@
-import { createApp } from 'vue'
-import './assets/main.css'
+// main.js
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';  // Importar Pinia
+import './assets/main.css';  // Estilos
+import App from './App.vue';  // Componente principal
 
-import App from './App.vue'
+// Crear la instancia de Pinia
+const pinia = createPinia();
 
-createApp(App).mount('#app')
+// Crear la aplicación
+const app = createApp(App);
+
+// Usar Pinia
+app.use(pinia);
+
+// Montar la aplicación
+app.mount('#app');
