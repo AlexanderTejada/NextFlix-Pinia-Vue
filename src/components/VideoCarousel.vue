@@ -6,14 +6,32 @@
     </div>
   </div>
 
-  <Carousel>
+  <Carousel
+  ref="carousel"
+  v-model="currentSlide"
+  :items-to-show="8"
+  :items-to-scroll="1"
+  :wrap-around="true"
+  :Transition="500"
+  snapAlign="start"
+  class="bg-transparent"
+  >
+    <Slide 
+    v-for="slide, index in movies"
+    :key="slide"
+    class="flex items-center object-cover text-white bg-transparent">
+      {{ slide }}
+       
+  </Slide>
+
+       </Carousel>
 </div>
   
   </template>
   
 
 <script setup>
-import {ref, toRefs} from 'vue'
+import {ref, toRefs, Transition} from 'vue'
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import { useMovieStore } from '../stores/movie';
